@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './FinalPoem.css';
 
-const FinalPoem = (props) => {
+const FinalPoem = ({submissions}) => {
+  const formattedLines = submissions.map((line) => {
+    return <p>{ line }</p>
+  });
 
   return (
     <div className="FinalPoem">
       <section className="FinalPoem__poem">
         <h3>Final Poem</h3>
-
+          { formattedLines }
       </section>
 
       <div className="FinalPoem__reveal-btn-container">

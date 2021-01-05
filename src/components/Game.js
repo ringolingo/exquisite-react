@@ -6,7 +6,7 @@ import RecentSubmission from './RecentSubmission';
 
 const Game = () => {
   const [submissions, setSubmissions] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const exampleFormat = FIELDS.map((field) => {
@@ -38,7 +38,7 @@ const Game = () => {
 
       <PlayerSubmissionForm index={index} sendSubmission={onFormSubmit} />
 
-      <FinalPoem />
+      <FinalPoem submissions={submissions} />
 
     </div>
   );
