@@ -22,6 +22,10 @@ const Game = () => {
     setIndex(index + 1);
   };
 
+  const onRevealPoem = () => {
+    setIsSubmitted(true);
+  }
+
   return (
     <div className="Game">
       <h2>Game</h2>
@@ -34,11 +38,11 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission />
+      { (isSubmitted === false && submissions.length > 0) ? <RecentSubmission submission={ submissions[submissions.length - 1] } /> : null }
 
-      <PlayerSubmissionForm index={index} sendSubmission={onFormSubmit} />
+      { isSubmitted === false ? <PlayerSubmissionForm index={index} sendSubmission={onFormSubmit} /> : null }
 
-      <FinalPoem submissions={submissions} />
+      <FinalPoem submissions={submissions} isSubmitted={isSubmitted} revealPoem={onRevealPoem} />
 
     </div>
   );
