@@ -1,45 +1,53 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import PlayerSubmissionFormField from './PlayerSubmissionFormField';
 
 import './PlayerSubmissionForm.css';
 
-const PlayerSubmissionForm = ({sendSubmission, index}) => {
-  const [formFields, setFormFields] = useState([
-    // make this an array of key/value, where the key is the key and the value is an object with the other info?
-    'The',
-    {
-      key: 'adj1',
-      placeholder: 'adjective',
-      value: '',
-    },
-    {
-      key: 'noun1',
-      placeholder: 'noun',
-      value: '',
-    },
-    {
-      key: 'adv',
-      placeholder: 'adverb',
-      value: '',
-    },
-    {
-      key: 'verb',
-      placeholder: 'verb',
-      value: '',
-    },
-    'the',
-    {
-      key: 'adj2',
-      placeholder: 'adjective',
-      value: '',
-    },
-    {
-      key: 'noun2',
-      placeholder: 'noun',
-      value: '',
-    },
-    '.',
-  ]);
+const PlayerSubmissionForm = ({sendSubmission, index, fields}) => {
+  const [formFields, setFormFields] = useState(fields.map((field) => {
+    if (field.key) {
+      return {
+        key: field.key,
+        placeholder: field.placeholder,
+        value: '',
+      };
+    } else {
+      return field;
+    }
+  }));
+
+  // const createInputFields = (fields) => {
+  //   return fields.map((field) => {
+  //     if (field.key) {
+  //       return <input
+  //           name={field.key}
+  //           placeholder={ field.placeholder }
+  //           type="text"
+  //           value={ field.value }
+  //           className={ field.value === '' ? 'PlayerSubmissionFormt__input--invalid' : 'PlayerSubmissionFormt__input--valid' }
+  //           onChange={onInputChange} />
+  //     } else {
+  //       return field
+  //     }
+  //   })
+  // }
+
+  // const createInputFields = fields.map((field) => {
+  //     if (field.key) {
+  //       return <input
+  //           name={field.key}
+  //           placeholder={ field.placeholder }
+  //           type="text"
+  //           value={ field.value }
+  //           className={ field.value === '' ? 'PlayerSubmissionFormt__input--invalid' : 'PlayerSubmissionFormt__input--valid' }
+  //           onChange={onInputChange} />
+  //     } else {
+  //       return field
+  //     }
+  //   }
+  // );
+  
 
   const onInputChange = (event) => {
     const updatedFormFields = formFields.map((field) => {
@@ -69,42 +77,17 @@ const PlayerSubmissionForm = ({sendSubmission, index}) => {
     }).join(' ');
     sendSubmission(line);
 
-    setFormFields([
-      // make this an array of key/value, where the key is the key and the value is an object with the other info?
-      'The',
-      {
-        key: 'adj1',
-        placeholder: 'adjective',
-        value: '',
-      },
-      {
-        key: 'noun1',
-        placeholder: 'noun',
-        value: '',
-      },
-      {
-        key: 'adv',
-        placeholder: 'adverb',
-        value: '',
-      },
-      {
-        key: 'verb',
-        placeholder: 'verb',
-        value: '',
-      },
-      'the',
-      {
-        key: 'adj2',
-        placeholder: 'adjective',
-        value: '',
-      },
-      {
-        key: 'noun2',
-        placeholder: 'noun',
-        value: '',
-      },
-      '.',
-    ]);
+    setFormFields(fields.map((field) => {
+      if (field.key) {
+        return {
+          key: field.key,
+          placeholder: field.placeholder,
+          value: '',
+        };
+      } else {
+        return field;
+      }
+    }));
   };
 
   return (
@@ -114,6 +97,7 @@ const PlayerSubmissionForm = ({sendSubmission, index}) => {
       <form className="PlayerSubmissionForm__form" onSubmit={ submitLine } >
 
         <div className="PlayerSubmissionForm__poem-inputs">
+          {/* { createInputFields } */}
           {/* update these so they aren't just hardcoded to the formFields array indices */}
           The 
           <input

@@ -40,7 +40,7 @@ const Game = () => {
 
       { (isSubmitted === false && submissions.length > 0) ? <RecentSubmission submission={ submissions[submissions.length - 1] } /> : null }
 
-      { isSubmitted === false ? <PlayerSubmissionForm index={index} sendSubmission={onFormSubmit} /> : null }
+      { isSubmitted === false ? <PlayerSubmissionForm index={index} sendSubmission={onFormSubmit} fields={FIELDS} /> : null }
 
       <FinalPoem submissions={submissions} isSubmitted={isSubmitted} revealPoem={onRevealPoem} />
 
