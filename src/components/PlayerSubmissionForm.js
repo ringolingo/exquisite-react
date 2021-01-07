@@ -3,22 +3,85 @@ import PropTypes from 'prop-types';
 
 import './PlayerSubmissionForm.css';
 
-const PlayerSubmissionForm = () => {
+const PlayerSubmissionForm = ({sendSubmission, index, fields}) => {
+  const [formFields, setFormFields] = useState(fields.map((field) => {
+    if (field.key) {
+      return {
+        key: field.key,
+        placeholder: field.placeholder,
+        value: '',
+      };
+    } else {
+      return field;
+    }
+  }));
+
+  const onInputChange = (event) => {
+    const updatedFormFields = formFields.map((field) => {
+      if (field.key === event.target.name) {
+        return {
+          key: event.target.name,
+          placeholder: event.target.placeholder,
+          value: event.target.value,
+        };
+      } else {
+        return field;
+      }
+    })
+
+    setFormFields(updatedFormFields);
+  };
+
+  const submitLine = (event) => {
+    event.preventDefault();
+    
+    const line = formFields.map((field) => {
+      if (field.key) {
+        return field.value;
+      } else {
+        return field;
+      }
+    }).join(' ');
+    sendSubmission(line);
+
+    setFormFields(fields.map((field) => {
+      if (field.key) {
+        return {
+          key: field.key,
+          placeholder: field.placeholder,
+          value: '',
+        };
+      } else {
+        return field;
+      }
+    }));
+  };
+
+  const createInputFields = formFields.map((field) => {
+      if (field.key) {
+        return <input
+            key={field.key}
+            name={field.key}
+            placeholder={ field.placeholder }
+            type="text"
+            value={ field.value }
+            className={ field.value === '' ? 'PlayerSubmissionFormt__input--invalid' : 'PlayerSubmissionFormt__input--valid' }
+            onChange={onInputChange}
+            />
+      } else {
+        return field
+      }
+    }
+  );
+
   return (
     <div className="PlayerSubmissionForm">
-      <h3>Player Submission Form for Player #{  }</h3>
+      <h3>Player Submission Form for Player #{ index }</h3>
 
-      <form className="PlayerSubmissionForm__form" >
+      <form className="PlayerSubmissionForm__form" onSubmit={ submitLine } >
 
         <div className="PlayerSubmissionForm__poem-inputs">
-
-          {
-            // Put your form inputs here... We've put in one below as an example
-          }
-          <input
-            placeholder="hm..."
-            type="text" />
-
+          { createInputFields }
         </div>
 
         <div className="PlayerSubmissionForm__submit">
