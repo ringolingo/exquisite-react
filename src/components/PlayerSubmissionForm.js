@@ -60,6 +60,7 @@ const PlayerSubmissionForm = ({sendSubmission, index, fields}) => {
   const createInputFields = formFields.map((field) => {
       if (field.key) {
         return <input
+            key={field.key}
             name={field.key}
             placeholder={ field.placeholder }
             type="text"

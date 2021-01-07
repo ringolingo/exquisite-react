@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './FinalPoem.css';
 
 const FinalPoem = ({submissions, isSubmitted, revealPoem}) => {
-  const formattedLines = submissions.map((line) => {
-    return <p>{ line }</p>
+  const formattedLines = submissions.map((line, i) => {
+    return <p key={i}>{ line }</p>
   });
 
   const onSubmitPoem = (event) => {
